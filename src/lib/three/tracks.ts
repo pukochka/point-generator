@@ -49,10 +49,8 @@ export function drawSatelliteTracks(days: number) {
 
       const point = new Vector2(x, y);
 
-      const condition = generator.divisions
-        .map(
-          (division) => distanceBetweenCartesian(point, division) < ZONE_RADIUS
-        )
+      const condition = generator.points
+        .map((p) => distanceBetweenCartesian(point, p.position) < ZONE_RADIUS)
         .filter(Boolean);
 
       if (condition.length && !intersects.includes(currentTurn)) {

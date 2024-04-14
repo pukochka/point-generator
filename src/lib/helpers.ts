@@ -117,7 +117,10 @@ export function distanceBetweenDegrees(start: Degrees, end: Degrees) {
   return EARTH_RADIUS * c;
 }
 
-export function distanceBetweenCartesian(start: Vector2, end: Vector2) {
+export function distanceBetweenCartesian(
+  start: Vector2 | Vector3,
+  end: Vector2 | Vector3
+) {
   return distanceBetweenDegrees(
     cartesianToDegrees(start.x, start.y),
     cartesianToDegrees(end.x, end.y)

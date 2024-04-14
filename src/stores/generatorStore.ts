@@ -6,7 +6,7 @@ import {
   trackIntersectsGroup,
 } from 'src/lib/three/tracks';
 import { Mesh, MeshBasicMaterial, SphereGeometry, Vector2 } from 'three';
-import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry';
+
 import { RLS } from 'src/lib/meta';
 import { misleadingGroup, Signal } from 'src/lib/signal';
 import { cartesianToDegrees, degreesToCartesian } from 'src/lib/helpers';
@@ -21,7 +21,7 @@ export const useGeneratorStore = defineStore('gen', {
       distance: 0.1,
       speed: 60,
 
-      time: 0,
+      time: 48,
       turns: 0,
       modal: false,
 
@@ -29,7 +29,7 @@ export const useGeneratorStore = defineStore('gen', {
       end: new Vector2(0, 0),
       mouse: new Vector2(0, 0),
 
-      divisions: [],
+      points: [],
 
       visible: 1,
       intersects: [],
@@ -55,7 +55,7 @@ export const useGeneratorStore = defineStore('gen', {
       this.track = null;
       this.moving = 0;
       this.intersects = [];
-      this.divisions = [];
+      this.points = [];
       this.selected = [];
 
       group.remove(...group.children);
@@ -73,39 +73,8 @@ export const useGeneratorStore = defineStore('gen', {
     },
 
     calculateTracks() {
-      this.time = this.distance / Number(this.speed); // В часах
-
-      for (let index = 0; index <= this.divisionsCount; index++) {
-        const start = this.start.clone();
-        const end = this.end.clone();
-        const length =
-          index * (this.start.distanceTo(this.end) / this.divisionsCount);
-
-        const division = end.sub(start).setLength(length).add(start);
-
-        this.divisions.push(division);
-      }
-
       this.updateVisible(1);
       drawSatelliteTracks(this.time / 24);
-    },
-
-    computeMouse(vec: Vector2) {
-      vec.set(this.mouse.x, this.mouse.y);
-    },
-
-    computeGeometry() {
-      const geometry = new LineGeometry();
-      geometry.setPositions([
-        this.start.x,
-        this.start.y,
-        0,
-        this.end.x,
-        this.end.y,
-        0,
-      ]);
-
-      return geometry;
     },
 
     select(rls: RLS) {
@@ -130,12 +99,12 @@ export const useGeneratorStore = defineStore('gen', {
         this.misleadingCount * this.divisionsCount * 128
       );
 
-      for (const point of this.divisions) {
+      for (const point of this.points) {
         const randRLS = Math.floor(Math.random() * this.selected.length);
         const randTurn = Math.floor(Math.random() * this.intersects.length);
         const turn = this.intersects[randTurn];
         const rls = this.selected[randRLS];
-        const degrees = cartesianToDegrees(point.x, point.y);
+        const degrees = cartesianToDegrees(point.position.x, point.position.y);
 
         for (let index = 0; index < this.misleadingCount - 1; index++) {
           const signal = new Signal(

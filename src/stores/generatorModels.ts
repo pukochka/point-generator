@@ -1,5 +1,5 @@
 import { Line2 } from 'three/examples/jsm/lines/Line2';
-import { Vector2 } from 'three';
+import { Mesh, Vector2 } from 'three';
 import { RLS } from 'src/lib/meta';
 
 export interface GeneratorStore {
@@ -16,7 +16,7 @@ export interface GeneratorStore {
   end: Vector2;
   mouse: Vector2;
 
-  divisions: Array<Vector2>;
+  points: Array<Mesh>;
   visible: number;
   intersects: Array<number>;
 

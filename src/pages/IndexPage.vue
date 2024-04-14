@@ -2,6 +2,14 @@
   <q-page>
     <div id="world-map"></div>
 
+    <div
+      class="bg-grey absolute-top-right text-center"
+      style="width: 60px; border-radius: 10px"
+    >
+      <div class="">{{ location.lat.toFixed(3) }}</div>
+      <div class="">{{ location.lon.toFixed(3) }}</div>
+    </div>
+
     <div class="row q-gutter-x-md q-pa-lg">
       <div class="col">
         <q-btn unelevated no-caps size="md" color="primary" class="fit">
@@ -61,10 +69,9 @@
 
       <div class="col">
         <q-input
-          v-model="generator.speed"
-          label="Скорость"
+          v-model="generator.misleadingCount"
+          label="Кол-во ложных сигналов"
           outlined
-          suffix="км/ч"
           mask="####"
         />
       </div>
@@ -123,27 +130,6 @@
                 </q-item-label>
               </q-item-section>
             </q-item>
-          </q-list>
-        </q-menu>
-      </q-btn>
-
-      <q-btn flat size="md" color="primary" :icon="mdiCog">
-        <q-menu>
-          <q-list style="width: 300px">
-            <q-input
-              square
-              v-model="generator.divisionsCount"
-              label="Кол-во делений на трассе"
-              outlined
-              type="number"
-            />
-            <q-input
-              square
-              v-model="generator.misleadingCount"
-              label="Кол-во дополнительных точек на делении"
-              outlined
-              type="number"
-            />
           </q-list>
         </q-menu>
       </q-btn>
@@ -216,7 +202,7 @@ import { rlsList } from 'src/lib/meta';
 import { handleClick, handleMousemove } from 'src/lib/three/vector';
 import { useGeneratorStore } from 'stores/generatorStore';
 import GenerateModal from 'components/GenerateModal.vue';
-import { mdiCog } from '@quasar/extras/mdi-v7';
+import { cartesianToDegrees } from '../lib/helpers';
 
 const generator = useGeneratorStore();
 
@@ -225,10 +211,14 @@ const condition = computed(
     !(
       generator.selected.length > 0 &&
       generator.moving > 1 &&
-      empty(generator.speed) &&
+      empty(generator.misleadingCount) &&
       empty(generator.frequency) &&
       empty(generator.location)
     )
+);
+
+const location = computed(() =>
+  cartesianToDegrees(generator.mouse.x, generator.mouse.y)
 );
 
 const empty = (value: string | number) => !isNaN(Number(value)) && value !== '';
@@ -245,14 +235,6 @@ onMounted(() => {
 });
 
 const info = computed(() => [
-  {
-    label: 'Расстояние',
-    value: generator.distance.toFixed(2) + ' км',
-  },
-  {
-    label: 'Время',
-    value: generator.time.toFixed(2) + ' ч',
-  },
   {
     label: 'Кол-во витков',
     value: generator.turns,
