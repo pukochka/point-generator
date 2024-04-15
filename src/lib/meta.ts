@@ -1,64 +1,79 @@
 export const gaussProps = ['Latitude', 'Longitude'];
 export interface RLS {
   label: string;
+  impulse: number;
   range: [number, number];
 }
 
 export const rlsList: Array<RLS> = [
   {
     label: 'AN/SPS-48E',
+    impulse: 1,
     range: [2900, 3100],
   },
   {
     label: 'AN/SPS-49(V)5',
+    impulse: 1,
     range: [880, 910],
   },
   {
     label: 'AN/SPN-46',
+    impulse: 1,
     range: [3590, 3700],
   },
   {
     label: 'AN/SPN-43C',
+    impulse: 1,
     range: [33000, 33400],
   },
   {
     label: 'AN/SPN-41',
+    impulse: 1,
     range: [15400, 15700],
   },
   {
     label: 'AN/SPQ-9B',
+    impulse: 1,
     range: [8500, 9600],
   },
   {
     label: 'AN/SPY-1A',
+    impulse: 1,
     range: [3100, 3900],
   },
   {
     label: 'AN/SPS-55',
+    impulse: 1,
     range: [9050, 10000],
   },
   {
     label: 'AN/SPG-62',
+    impulse: 1,
     range: [8500, 9600],
   },
   {
     label: 'AN/SPQ-9A',
+    impulse: 1,
     range: [8500, 9600],
   },
   {
     label: 'AN/SPY-1D',
+    impulse: 1,
     range: [3100, 3900],
   },
   {
     label: 'AN/SPS-49',
+    impulse: 1,
     range: [850, 950],
   },
   {
     label: 'AN/SPS-67',
+    impulse: 1,
     range: [5380, 5580],
   },
   {
     label: 'AN/SPS-64',
+    impulse: 1,
     range: [3025, 3075],
   },
 ];
