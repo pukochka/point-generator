@@ -37,7 +37,7 @@ export class Signal {
   ) {
     const generator = useGeneratorStore();
 
-    this.rls = rls;
+    // this.rls = rls;
     this.turn = turn;
     this.point = point;
     this.location = location;
