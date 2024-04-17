@@ -6,60 +6,20 @@ export interface RLS {
 
 export const rlsList: Array<RLS> = [
   {
-    label: 'AN/SPS-48E',
-    range: [2900, 3100],
+    label: 'AN/TSC- 187',
+    range: [7900, 8400],
   },
   {
-    label: 'AN/SPS-49(V)5',
-    range: [880, 910],
+    label: 'AN/TTC- 59',
+    range: [10000, 10020],
   },
   {
-    label: 'AN/SPN-46',
-    range: [3590, 3700],
+    label: 'AN/TPQ-37',
+    range: [3100, 3400],
   },
   {
-    label: 'AN/SPN-43C',
-    range: [33000, 33400],
-  },
-  {
-    label: 'AN/SPN-41',
-    range: [15400, 15700],
-  },
-  {
-    label: 'AN/SPQ-9B',
-    range: [8500, 9600],
-  },
-  {
-    label: 'AN/SPY-1A',
-    range: [3100, 3900],
-  },
-  {
-    label: 'AN/SPS-55',
-    range: [9050, 10000],
-  },
-  {
-    label: 'AN/SPG-62',
-    range: [8500, 9600],
-  },
-  {
-    label: 'AN/SPQ-9A',
-    range: [8500, 9600],
-  },
-  {
-    label: 'AN/SPY-1D',
-    range: [3100, 3900],
-  },
-  {
-    label: 'AN/SPS-49',
-    range: [850, 950],
-  },
-  {
-    label: 'AN/SPS-67',
-    range: [5380, 5580],
-  },
-  {
-    label: 'AN/SPS-64',
-    range: [3025, 3075],
+    label: 'AN/TSC- 156',
+    range: [4000, 8000],
   },
 ];
 
