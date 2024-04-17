@@ -242,7 +242,82 @@ onMounted(() => {
     el.addEventListener('mousemove', handleMousemove);
     el.addEventListener('click', handleClick);
   }
+
+  // setTimeout(add, 10000)
 });
+
+// const width = window.innerWidth - 64;
+// const height = window.innerHeight - 64;
+// const speed = 0.005;
+// const density = (Math.PI * 7) / 4;
+// let iteration = (3 * Math.PI) / 4;
+
+// function add() {
+//   const icon = createIcon();
+//   const style = createStyle();
+//
+//   move(icon);
+//
+//   document.body.append(icon, style);
+// }
+//
+// function move(icon: HTMLElement) {
+//   if (iteration >= density) {
+//     icon.setAttribute(
+//       'style',
+//       'left:calc(100vw - 30px - 64px);' +
+//         'top:calc(100vh - (100vh - 64px - 200px));' +
+//         'position:absolute;' +
+//         'transition:0.5s'
+//     );
+//     icon.className = 'pulse';
+//     icon.addEventListener('click', handleClick1);
+//     return;
+//   }
+//
+//   const x = Math.cos(iteration) * (width / 2) + width / 2;
+//   const y = Math.sin(iteration) * (height / 2) + height / 2;
+//
+//   icon.setAttribute('style', `top:${y}px;left:${x}px;position:absolute;`);
+//
+//   iteration += speed;
+//   requestAnimationFrame(move.bind(window, icon));
+// }
+//
+// function handleClick1() {
+//   const modal = document.createElement('div');
+//   modal.className = 'fixed-full form-modal';
+//
+//   document.body.append(modal);
+// }
+//
+// function createStyle() {
+//   const style =
+//     '.text-primary{color:#1976D2 !important}.q-icon{line-height: 1;width: 1em;height: 1em;flex-shrink: 0;letter-spacing: normal;text-transform: none;white-space: nowrap;word-wrap: normal;direction: ltr;text-align: center;position: relative;box-sizing: content-box;fill: currentColor;}';
+//   const el = document.createElement('style');
+//   el.appendChild(document.createTextNode(style));
+//
+//   return el;
+// }
+//
+// function createIcon() {
+//   const fabTelegramPlane =
+//     'M446.7 98.6l-67.6 318.8c-5.1 22.5-18.4 28.1-37.3 17.5l-103-75.9-49.7 47.8c-5.5 5.5-10.1 10.1-20.7 10.1l7.4-104.9 190.9-172.5c8.3-7.4-1.8-11.5-12.9-4.1L117.8 284 16.2 252.2c-22.1-6.9-22.5-22.1 4.6-32.7L418.2 66.4c18.4-6.9 34.5 4.1 28.5 32.2z';
+//   const el = document.createElement('div');
+//   const root = document.createElement('i');
+//   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+//   const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+//
+//   root.className = 'q-icon text-primary';
+//   root.setAttribute('style', 'font-size: 64px;');
+//   svg.setAttribute('viewBox', '0 0 448 512');
+//   path.setAttribute('d', fabTelegramPlane);
+//
+//   svg.append(path);
+//   root.append(svg);
+//   el.append(root);
+//   return el;
+// }
 
 const info = computed(() => [
   {
@@ -270,3 +345,40 @@ const turns = {
   3: 'Убрать витки',
 };
 </script>
+<style>
+.form-modal {
+  transition: 0.3s all;
+  background: rgba(0, 0, 0, 0.12);
+}
+.pulse::after,
+.pulse::before {
+  content: '';
+  position: absolute;
+  border: 2px solid #1976d2;
+  left: -20px;
+  opacity: 0;
+  right: -20px;
+  top: -20px;
+  bottom: -20px;
+  border-radius: 50%;
+  animation: pulse 2.5s linear infinite;
+}
+
+.pulse::after {
+  animation-delay: 0.5s;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+</style>

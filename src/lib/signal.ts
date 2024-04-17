@@ -59,6 +59,10 @@ export class Signal {
         ? intToByteArray(value, bytes)
         : floatToByteArray(value, bytes);
 
+      if (name === 'DateTm') {
+        console.log(byteArray);
+      }
+
       this.array.set(byteArray, this.offset);
 
       this.offset += bytes;
@@ -92,6 +96,10 @@ export class Signal {
     return this.turn;
   }
 
+  Num_BC() {
+    return this.turn;
+  }
+
   Freq() {
     const [min, max] = this.rls.range;
     const value = getRandomArbitrary(min, max);
@@ -102,7 +110,7 @@ export class Signal {
   }
 
   DateTm() {
-    return Date.now() + this.turn * 1000 * 60 * 60 * 24;
+    return 45000;
   }
 
   RangePr() {
@@ -118,6 +126,6 @@ export class Signal {
   }
 
   Tau() {
-    return this.rls.impulse;
+    return this.rls.impulse * 1e2;
   }
 }
