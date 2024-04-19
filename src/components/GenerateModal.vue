@@ -1,16 +1,25 @@
 <template>
-  <q-dialog full-width v-model="generator.modal">
+  <q-dialog full-width v-model="generator.modal" position="bottom">
     <q-card>
       <q-table
         :rows="rows"
         :columns="columns"
         row-key="name"
         color="amber"
+        :rows-per-page-options="[0]"
         hide-bottom
       >
+        <template v-slot:header="props">
+          <q-tr :props="props">
+            <q-th v-for="col in props.cols" :key="col.name" :props="props">
+              <div class="text-h6">{{ col.label }}</div>
+            </q-th>
+          </q-tr>
+        </template>
+
         <template v-slot:body-cell="props">
           <q-td :props="props" v-if="props.col.name === 'name' + ''">
-            <q-badge color="blue" :label="props.value" />
+            <div class="text-wrap text-h6" v-html="props.value"></div>
           </q-td>
 
           <q-td :props="props" v-else>
@@ -23,11 +32,11 @@
 
       <q-card-actions align="right">
         <q-btn
+          no-caps
           flat
           size="md"
-          label="OK"
+          label="Закрыть"
           color="primary"
-          @click="generator.createFile"
           v-close-popup
         />
       </q-card-actions>
@@ -37,27 +46,9 @@
 
 <script setup lang="ts">
 import { useGeneratorStore } from 'stores/generatorStore';
+import { rows } from 'src/lib/meta';
 
 const generator = useGeneratorStore();
-
-const rows = [
-  {
-    name: 'Авианосец «Нимиц» (CVN-68)',
-    rls: ['AN/SPS-48E', 'AN/SPS-49(V)5', 'AN/SPN-46'],
-    freq: ['2900-3100', '880-910', '3590-3700;33000-33400'],
-    repeat: ['1000-2350', '3.3-4.85', '2000'],
-    power: ['2400', '360', '50'],
-    gain: ['38.5', '38', '30'],
-  },
-  {
-    name: 'Kрейсера типа «Тикондерог»',
-    rls: ['AN/SPY-1A', 'AN/SPS-49', 'AN/SPS-55'],
-    freq: ['2900-3100', '880-910', '3590-3700;33000-33400'],
-    repeat: ['1000-2350', '3.3-4.85', '2000'],
-    power: ['2400', '360', '50'],
-    gain: ['38.5', '38', '30'],
-  },
-];
 
 const columns = [
   { name: 'name', align: 'center', label: 'Объект', field: 'name' },
@@ -69,4 +60,8 @@ const columns = [
 ];
 </script>
 
-<style scoped></style>
+<style scoped>
+.text-wrap {
+  white-space: pre-wrap;
+}
+</style>
