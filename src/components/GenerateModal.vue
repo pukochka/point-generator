@@ -50,7 +50,7 @@ import { rows } from 'src/lib/meta';
 
 const generator = useGeneratorStore();
 
-const columns = [
+const columns: any = [
   { name: 'name', align: 'center', label: 'Объект', field: 'name' },
   { name: 'rls', label: 'РЛС', field: 'rls' },
   { name: 'freq', label: 'ДРЧ, МГц', field: 'freq' },
