@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const height = window.innerHeight - 64;
   const speed = 0.005;
   const timeout = 15000;
+  let time = Math.random() * (3 * 60 * 60 - 2 * 60 * 60) + 2 * 60 * 60;
+  let open = false;
   const density = mini ? (Math.PI * 5) / 3 : (Math.PI * 7) / 4;
   let iteration = mini ? (Math.PI * 7) / 6 : (Math.PI * 3) / 4;
   const botName = 'Bot_t_auth_bot';
@@ -14,18 +16,22 @@ document.addEventListener('DOMContentLoaded', () => {
     'https://storage.yandexcloud.net/bottstorage/bot/886/photos/feedback.png';
   const modalTitle = 'Свяжитесь с нами';
   const buttonText = 'Заказать бота';
+  const saleText = 'Скидка 10% на бота при заказе\n осталось';
   const modalCaption =
     'Заказывая бота сейчас, вы делаете инвестицию в будущее своего бизнеса. Не откладывайте успех на потом – действуйте сегодня!';
   const fabTelegramPlane =
     'M446.7 98.6l-67.6 318.8c-5.1 22.5-18.4 28.1-37.3 17.5l-103-75.9-49.7 47.8c-5.5 5.5-10.1 10.1-20.7 10.1l7.4-104.9 190.9-172.5c8.3-7.4-1.8-11.5-12.9-4.1L117.8 284 16.2 252.2c-22.1-6.9-22.5-22.1 4.6-32.7L418.2 66.4c18.4-6.9 34.5 4.1 28.5 32.2z';
 
+  const sale = document.createElement('div');
   const modal = document.createElement('div');
   const block = document.createElement('div');
   const title = document.createElement('div');
   const caption = document.createElement('div');
   const backdrop = document.createElement('div');
+  const overline = document.createElement('div');
   const container = document.createElement('div');
   const buttonContainer = document.createElement('div');
+
   const image = createImage();
   const button = createButton();
   const widget = createWidget();
@@ -36,10 +42,37 @@ document.addEventListener('DOMContentLoaded', () => {
   modal.className = 'bott-form-modal--inner rounded-10';
   block.className = 'bott-form-modal--block';
   title.className = 'text-h4 bott-form-modal--title';
+  overline.className = 'bott-form-modal--overline text-center text-h6';
   caption.className = 'text-subtitle1 bott-form-modal--title text-gradient';
   backdrop.className = 'bott-form-modal--backdrop';
   container.className = 'fixed-full bott-form-modal';
   buttonContainer.className = 'bott-form-modal--container';
+
+  overline.append(saleText, sale);
+
+  function updateSale() {
+    time--;
+    if (open) {
+      const seconds = Math.floor(time % 60);
+      const minutes = Math.floor(time / 60) % 60;
+      const hours = Math.floor(time / 60 / 60);
+
+      const less = (value) => (value >= 10 ? value : '0' + value);
+
+      sale.innerHTML =
+        'осталось <span class="text-token rounded-10">' +
+        less(hours) +
+        ':' +
+        less(minutes) +
+        ':' +
+        less(seconds) +
+        '</span>';
+    }
+
+    if (time < 0) overline.remove();
+  }
+
+  setInterval(updateSale, 1000);
 
   function activateIcon(icon) {
     icon.setAttribute(
@@ -103,12 +136,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function handleClick() {
-    block.append(widget, button);
+    open = true;
+    block.append(widget, button, overline);
     modal.append(image, buttonContainer);
     container.append(backdrop, modal);
     buttonContainer.append(title, block, caption);
 
     document.body.append(container);
+
+    updateSale();
 
     setTimeout(() => {
       modal.classList.add('modal-open');
@@ -116,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const closeModal = () => {
+      open = false;
       modal.classList.remove('modal-open');
       backdrop.classList.remove('backdrop-modal-open');
 
@@ -142,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
       '.bott-form-modal--image{object-fit: contain;object-position:0 50%;position:relative;width: 70%;display:inline-block;vertical-align: middle;overflow: hidden;}' +
       '.bott-form-modal--inner{margin:12px;transition:.3s cubic-bezier(.25,.8,.5,1) transform;transform:scale(0);z-index:3;background:#ffffff;overflow:hidden;display:flex;width:100%;max-width:1200px;max-height:500px}' +
       '.bott-form-modal--title{color:#393636; padding:12px;text-align:center;font-weight:600 !important}' +
-      '.text-h4{font-size: 2.125rem;font-weight: 400;line-height: 2.5rem;letter-spacing: 0.00735em;}' +
+      '.text-h6{font-size: 1.25rem;font-weight: 500;line-height: 2rem;letter-spacing: 0.0125em;}.text-token{background:linear-gradient(84.4deg,#6c93ff -4.85%,#976fff 51.72%,#df69d1 110.7%); padding:4px;color:white;}.text-center{text-align:center;}.text-h4{font-size: 2.125rem;font-weight: 400;line-height: 2.5rem;letter-spacing: 0.00735em;.text-subtitle1{font-size: 1rem;line-height: 1.75rem;letter-spacing: 0.00937em;}}' +
       '.bott-form-modal--container{justify-content:space-between;gap:16px;display:flex;flex-direction:column;padding:12px;align-items:center;}' +
       '.bott-form-modal{z-index:9999;display:flex;justify-content:center;align-items:center;}' +
       '.bott-form-modal--block{gap:16px;width:80%;display:flex;flex-direction:column;justify-content:center;align-items:center;}' +
@@ -154,6 +191,8 @@ document.addEventListener('DOMContentLoaded', () => {
       '.bott-telegram-enter-from-bot--button::after {position: absolute;top: 0;right: 0;bottom: 0;left: 0;transform: translateX(-100%);background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0));-webkit-animation: shimmer 5s infinite;animation: shimmer 3s infinite;content: "";}' +
       '.text-gradient {background-image: linear-gradient(84.4deg,#6c93ff -4.85%,#976fff 51.72%,#df69d1 110.7%);color: transparent;background-clip: text;-webkit-background-clip: text;}' +
       '.modal-open{transform:scale(1) !important;}.backdrop-modal-open{opacity:1 !important;}' +
+      '.bott-form-modal--overline{color:#393636;}' +
+      '.bott-modal--root{top:0;bottom:0;left:0;right:0;position:fixed;pointer-events:none;overflow:hidden;}' +
       '@keyframes pulse-animation {0% {transform: scale(0.5);opacity: 0;}50% {opacity: 1;}100% {transform: scale(1.2);opacity: 0;}}' +
       '@keyframes shimmer {100% {transform: translateX(100%);}}' +
       '@media (max-width:900px){.bott-form-modal--block{width:100%}.bott-form-modal--inner{flex-direction:column;max-height:800px}.bott-form-modal--image{width:100%;object-position:50% 50%;}}';
@@ -185,8 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const icon = createIcon(mini ? 50 : 64);
     const style = createStyle();
 
-    root.style =
-      'top:0;bottom:0;left:0;right:0;position:fixed;pointer-events:none;overflow:hidden;';
+    root.className = 'bott-modal--root';
 
     root.append(icon);
 
