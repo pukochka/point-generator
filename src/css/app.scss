@@ -1,10 +1,7 @@
-@import "fonts.css";
-
-body {
-  font-family: 'Yandex Sans Text', serif !important;
+.rounded{
+  border-radius: 10px !important;
 }
 
-.bg-blur{
-  filter: blur(12px);
+.bg-brand{
+  background: #ffffff;
 }
-

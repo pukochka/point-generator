@@ -25,9 +25,7 @@ app.post('*', function (req, res) {
         res.send({ result: true });
       }
     });
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 });
 
 app.listen(port);

@@ -7,9 +7,14 @@ import {
 } from 'src/lib/three/tracks';
 import { Mesh, MeshBasicMaterial, SphereGeometry, Vector2 } from 'three';
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry';
-import { RLS } from 'src/lib/meta';
+import { RLS, rlsList } from 'src/lib/meta';
 import { misleadingGroup, Signal } from 'src/lib/signal';
-import { cartesianToDegrees, degreesToCartesian } from 'src/lib/helpers';
+import {
+  cartesianToDegrees,
+  degreesToCartesian,
+  distanceBetweenCartesian,
+  getRandomArbitrary,
+} from 'src/lib/helpers';
 import axios from 'axios';
 import { group } from 'src/lib/three/vector';
 
@@ -20,9 +25,11 @@ export const useGeneratorStore = defineStore('gen', {
       moving: 0,
       distance: 0.1,
       speed: 60,
+      days: 1,
 
       time: 0,
       turns: 0,
+      d: 0,
       modal: false,
 
       start: new Vector2(0, 0),
@@ -34,14 +41,14 @@ export const useGeneratorStore = defineStore('gen', {
       visible: 1,
       intersects: [],
 
-      location: 1,
+      location: 0.1,
       frequency: 1000,
 
       selected: [],
 
       uInt8Array: new Uint8Array(),
 
-      filename: '1',
+      filename: 'обстановка',
 
       divisionsCount: 40,
       misleadingCount: 16,
@@ -54,6 +61,7 @@ export const useGeneratorStore = defineStore('gen', {
     removeTrack() {
       this.track = null;
       this.moving = 0;
+      this.d = 0;
       this.intersects = [];
       this.divisions = [];
       this.selected = [];
@@ -67,13 +75,14 @@ export const useGeneratorStore = defineStore('gen', {
     updateVisible(value: number) {
       this.visible = value;
 
-      trackGroup.visible = value !== 3 && (value === 0 || value === 2);
-      trackIntersectsGroup.visible =
-        value !== 3 && (value === 0 || value === 1);
+      trackGroup.visible = false;
+      trackIntersectsGroup.visible = true;
     },
 
     calculateTracks() {
-      this.time = this.distance / Number(this.speed); // В часах
+      this.time = this.distance / (280 / 24); // В часах
+
+      this.divisionsCount = getRandomArbitrary(4 * this.days, 8 * this.days);
 
       for (let index = 0; index <= this.divisionsCount; index++) {
         const start = this.start.clone();
@@ -86,7 +95,7 @@ export const useGeneratorStore = defineStore('gen', {
         this.divisions.push(division);
       }
 
-      this.updateVisible(1);
+      this.updateVisible(2);
       drawSatelliteTracks(this.time / 24);
     },
 
@@ -96,14 +105,18 @@ export const useGeneratorStore = defineStore('gen', {
 
     computeGeometry() {
       const geometry = new LineGeometry();
-      geometry.setPositions([
-        this.start.x,
-        this.start.y,
-        0,
-        this.end.x,
-        this.end.y,
-        0,
-      ]);
+
+      let end = this.end.clone();
+
+      if (distanceBetweenCartesian(this.start, this.end) > 280 * this.days) {
+        if (this.d === 0) {
+          this.d = this.start.distanceTo(this.end);
+        }
+
+        end = this.end.sub(this.start).setLength(this.d).add(this.start);
+      }
+
+      geometry.setPositions([this.start.x, this.start.y, 0, end.x, end.y, 0]);
 
       return geometry;
     },
@@ -131,13 +144,13 @@ export const useGeneratorStore = defineStore('gen', {
       );
 
       for (const point of this.divisions) {
-        const randRLS = Math.floor(Math.random() * this.selected.length);
+        const randRLS = Math.floor(Math.random() * rlsList.length);
         const randTurn = Math.floor(Math.random() * this.intersects.length);
         const turn = this.intersects[randTurn];
-        const rls = this.selected[randRLS];
+        const rls = rlsList[randRLS];
         const degrees = cartesianToDegrees(point.x, point.y);
 
-        for (let index = 0; index < this.misleadingCount - 1; index++) {
+        for (let i = 0; i < 12; i++) {
           const signal = new Signal(
             rls,
             degrees,

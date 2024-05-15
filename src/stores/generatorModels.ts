@@ -7,6 +7,8 @@ export interface GeneratorStore {
   moving: number;
   distance: number;
   speed: number;
+  days: number;
+  d: number;
 
   time: number;
   turns: number;

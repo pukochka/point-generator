@@ -59,10 +59,6 @@ export class Signal {
         ? intToByteArray(value, bytes)
         : floatToByteArray(value, bytes);
 
-      if (name === 'DateTm') {
-        console.log(byteArray);
-      }
-
       this.array.set(byteArray, this.offset);
 
       this.offset += bytes;
