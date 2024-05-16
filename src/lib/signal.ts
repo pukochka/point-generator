@@ -6,7 +6,7 @@ import {
   intToByteArray,
   isInt,
 } from 'src/lib/helpers';
-import { meta, MetaNames, RLS } from 'src/lib/meta';
+import { RLS } from 'src/lib/meta';
 import { Group, MathUtils } from 'three';
 import { useGeneratorStore } from 'stores/generatorStore';
 
@@ -44,25 +44,25 @@ export class Signal {
     this.location = location;
     this.frequency = frequency;
 
-    for (const values of Object.entries(meta)) {
-      let value = 0;
-      const name = <MetaNames>values[0];
-      const { bytes }: MetaProps = values[1];
-
-      if (name in this) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        value = this[name]();
-      }
-
-      const byteArray = isInt(Number(value))
-        ? intToByteArray(value, bytes)
-        : floatToByteArray(value, bytes);
-
-      this.array.set(byteArray, this.offset);
-
-      this.offset += bytes;
-    }
+    // for (const values of Object.entries(meta)) {
+    //   let value = 0;
+    //   const name = <MetaNames>values[0];
+    //   const { bytes }: MetaProps = values[1];
+    //
+    //   if (name in this) {
+    //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //     // @ts-ignore
+    //     value = this[name]();
+    //   }
+    //
+    //   const byteArray = isInt(Number(value))
+    //     ? intToByteArray(value, bytes)
+    //     : floatToByteArray(value, bytes);
+    //
+    //   this.array.set(byteArray, this.offset);
+    //
+    //   this.offset += bytes;
+    // }
 
     generator.addFalsePoint(
       MathUtils.radToDeg(this.lat),

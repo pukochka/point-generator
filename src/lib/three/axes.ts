@@ -1,37 +1,30 @@
-import { BufferGeometry, Line, LineBasicMaterial, Vector2 } from 'three';
+import { Group, Mesh, MeshBasicMaterial, SphereGeometry } from 'three';
 import { scene } from 'src/lib/three/launch';
 
-const axisMaterial = new LineBasicMaterial({ color: '#cfd2cd' });
-const horizontalStep = 6.25 / 8;
-const verticalStep = 12.5 / 8;
-const vertical = [-6.25, 6.25];
-const horizontal = [-12.5, 12.5];
+import { firstDayPositions, secondDayPositions } from 'src/lib/meta';
 
-function drawAxes(
-  direction: Array<number>,
-  step: number,
-  side: 'vertical' | 'horizontal'
-) {
-  const [top, bottom] = direction;
-  const condition = side === 'vertical';
-
-  for (let i = -8; i < 8; i++) {
-    const start = new Vector2(
-      condition ? step * i : top,
-      condition ? top : step * i
-    );
-    const end = new Vector2(
-      condition ? step * i : bottom,
-      condition ? bottom : step * i
-    );
-    const geometry = new BufferGeometry().setFromPoints([start, end]);
-    const line = new Line(geometry, axisMaterial);
-
-    scene.add(line);
-  }
-}
+export const firstGroup = new Group();
+export const secondGroup = new Group();
 
 export function initializeAxes() {
-  drawAxes(vertical, verticalStep, 'vertical');
-  drawAxes(horizontal, horizontalStep, 'horizontal');
+  for (let i = 0; i < 30; i++) {
+    const geometry = new SphereGeometry(0.05, 32, 16);
+    const material = new MeshBasicMaterial({ color: 0xffff00 });
+    const sphere = new Mesh(geometry, material);
+
+    const [x1, y1] = firstDayPositions[i];
+    const [x2, y2] = secondDayPositions[i];
+
+    sphere.position.set(x1, y1, 0);
+    firstGroup.add(sphere);
+
+    const sphere1 = sphere.clone();
+    sphere1.position.set(x2, y2, 0);
+
+    secondGroup.add(sphere1);
+  }
+
+  secondGroup.visible = false;
+
+  scene.add(firstGroup, secondGroup);
 }

@@ -33,4 +33,6 @@ export interface GeneratorStore {
 
   divisionsCount: number;
   misleadingCount: number;
+
+  tab: string;
 }

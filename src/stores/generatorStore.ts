@@ -52,6 +52,8 @@ export const useGeneratorStore = defineStore('gen', {
 
       divisionsCount: 40,
       misleadingCount: 16,
+
+      tab: '1',
     } as GeneratorStore),
   getters: {
     intersected: (state) => state.intersects.length,

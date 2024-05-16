@@ -4,9 +4,10 @@ import { scene } from 'src/lib/three/launch';
 import { trackGroup, trackIntersectsGroup } from 'src/lib/three/tracks';
 import { misleadingGroup } from 'src/lib/signal';
 import { group } from 'src/lib/three/vector';
+import { initializeAxes } from 'src/lib/three/axes';
 
 export default boot(() => {
-  // initializeAxes();
+  initializeAxes();
   scene.add(group);
   scene.add(trackGroup);
   scene.add(misleadingGroup);

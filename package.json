@@ -2,7 +2,7 @@
   "name": "point-generator",
   "version": "0.0.1",
   "description": "Generator for signals",
-  "productName": "Формирование обстановки АУГ",
+  "productName": "Все виды",
   "author": "pukochka <tema.puko@gmail.com>",
   "private": true,
   "scripts": {

@@ -1,7 +1,17 @@
+@import "quasar.variables";
+$black-opacity: rgba(0, 0, 0, 0.12);
 .rounded{
   border-radius: 10px !important;
 }
 
 .bg-brand{
-  background: #ffffff;
+  background: $mars-sand !important;
+}
+
+.text-brand{
+  color: $mars-sand !important;
+}
+
+.bordered {
+  border: 1px solid $black-opacity !important;
 }
