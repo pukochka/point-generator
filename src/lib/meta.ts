@@ -653,21 +653,21 @@ export const observations = [
 export const optic1 = [
   {
     label: '16-05-2024 10:24',
-    link: 'src/assets/first1.jpg',
+    link: './first1.jpg',
   },
   {
     label: '16-05-2024 9:41',
-    link: 'src/assets/first2.jpg',
+    link: './first2.jpg',
   },
   {
     label: '16-05-2024 8:05',
-    link: 'src/assets/first3.jpg',
+    link: './first3.jpg',
   },
 ];
 
 export const optic2 = [
   {
     label: '17-05-2024 15:31',
-    link: 'src/assets/second1.jpg',
+    link: './second1.jpg',
   },
 ];
