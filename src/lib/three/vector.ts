@@ -17,7 +17,7 @@ function createTrack() {
   const generator = useGeneratorStore();
 
   const geometry = generator.computeGeometry();
-  const material = new LineMaterial({ color: 0x780000, linewidth: 0.004 });
+  const material = new LineMaterial({ color: 0xf72585, linewidth: 0.004 });
 
   return new Line2(geometry, material);
 }

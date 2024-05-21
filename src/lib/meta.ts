@@ -7,34 +7,74 @@ export interface RLS {
 
 export const rlsList: Array<RLS> = [
   {
-    label: 'AN/TSC- 187',
-    range: [7900, 8400],
+    label: 'AN/SPS-48E',
+    impulse: 0.1,
+    range: [2900, 3100],
+  },
+  {
+    label: 'AN/SPS-49(V)5',
+    impulse: 10,
+    range: [880, 910],
+  },
+  {
+    label: 'AN/SPN-46',
     impulse: 0.6,
+    range: [3590, 3700],
   },
   {
-    label: 'AN/TTC- 59',
-    range: [10000, 10020],
+    label: 'AN/SPN-43C',
+    impulse: 0.5,
+    range: [33000, 33400],
+  },
+  {
+    label: 'AN/SPN-41',
     impulse: 0.8,
+    range: [15400, 15700],
   },
   {
-    label: 'AN/TPQ-37',
-    range: [3100, 3400],
-    impulse: 0.4,
+    label: 'AN/SPQ-9B',
+    impulse: 0.1,
+    range: [8500, 9600],
   },
   {
-    label: 'AN/TSC- 156',
-    range: [4000, 8000],
-    impulse: 0.8,
+    label: 'AN/SPY-1A',
+    impulse: 0.2,
+    range: [3100, 3900],
   },
   {
-    label: 'AN/TPQ-31',
-    range: [4000, 6000],
+    label: 'AN/SPS-55',
     impulse: 1,
+    range: [9050, 10000],
   },
   {
-    label: 'AN/TSC- 156',
-    range: [1250, 1350],
-    impulse: 1.1,
+    label: 'AN/SPG-62',
+    impulse: 6,
+    range: [8500, 9600],
+  },
+  {
+    label: 'AN/SPQ-9A',
+    impulse: 0.2,
+    range: [8500, 9600],
+  },
+  {
+    label: 'AN/SPY-1D',
+    impulse: 0.3,
+    range: [3100, 3900],
+  },
+  {
+    label: 'AN/SPS-49',
+    impulse: 4,
+    range: [850, 950],
+  },
+  {
+    label: 'AN/SPS-67',
+    impulse: 0.5,
+    range: [5380, 5580],
+  },
+  {
+    label: 'AN/SPS-64',
+    impulse: 0.1,
+    range: [3025, 3075],
   },
 ];
 
