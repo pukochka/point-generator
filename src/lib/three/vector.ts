@@ -20,7 +20,7 @@ export const raycaster = new Raycaster();
 export const group = new Group();
 
 function createPoint() {
-  const geometry = new SphereGeometry(0.03, 32, 16);
+  const geometry = new SphereGeometry(0.05, 32, 16);
   const material = new MeshBasicMaterial({ color: 'red' });
 
   return new Mesh(geometry, material);
