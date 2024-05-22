@@ -35,4 +35,6 @@ export interface GeneratorStore {
   misleadingCount: number;
 
   tab: string;
+  situation: number;
+  common: boolean;
 }

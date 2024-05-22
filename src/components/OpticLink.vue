@@ -9,17 +9,36 @@
         <q-img class="full-width" :src="item.link" />
       </q-item-section>
     </q-item>
+
+    <div class=""></div>
   </q-list>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { optic1, optic2 } from 'src/lib/meta';
+import {
+  efs1,
+  efs2,
+  efs3,
+  efs4,
+  optic1,
+  optic2,
+  optic3,
+  optic4,
+} from 'src/lib/meta';
 import { useGeneratorStore } from 'stores/generatorStore';
 
 const store = useGeneratorStore();
 
-const optic = computed(() => (store.tab === '1' ? optic1 : optic2));
+const optic = computed(() =>
+  store.situation === 1
+    ? store.tab === '1'
+      ? optic1
+      : optic2
+    : store.tab === '1'
+    ? optic3
+    : optic4
+);
 </script>
 
 <style scoped></style>

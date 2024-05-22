@@ -83,14 +83,22 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { efs1, efs2, observations } from 'src/lib/meta';
+import { efs1, efs2, efs3, efs4, observations } from 'src/lib/meta';
 import { useGeneratorStore } from 'stores/generatorStore';
 
 const store = useGeneratorStore();
 
 const tab = ref('efs');
 
-const efs = computed(() => (store.tab === '1' ? efs1 : efs2));
+const efs = computed(() =>
+  store.situation === 1
+    ? store.tab === '1'
+      ? efs1
+      : efs2
+    : store.tab === '1'
+    ? efs3
+    : efs4
+);
 </script>
 
 <style scoped></style>
