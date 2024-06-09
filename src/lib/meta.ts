@@ -2,24 +2,39 @@ export const gaussProps = ['Latitude', 'Longitude'];
 export interface RLS {
   label: string;
   range: [number, number];
+  impulse: number;
 }
 
 export const rlsList: Array<RLS> = [
   {
-    label: 'AN/TSC- 187',
+    label: 'AN/TSC-187',
     range: [7900, 8400],
+    impulse: 1,
   },
   {
-    label: 'AN/TTC- 59',
+    label: 'AN/TTC-59',
     range: [10000, 10020],
+    impulse: 1,
   },
   {
     label: 'AN/TPQ-37',
     range: [3100, 3400],
+    impulse: 1,
   },
   {
-    label: 'AN/TSC- 156',
+    label: 'AN/TSC-156',
     range: [4000, 8000],
+    impulse: 1.1,
+  },
+  {
+    label: 'AN/TSC-154А',
+    range: [8000, 12000],
+    impulse: 0.6,
+  },
+  {
+    label: 'AN/TTC-54',
+    range: [9900, 10100],
+    impulse: 0.8,
   },
 ];
 

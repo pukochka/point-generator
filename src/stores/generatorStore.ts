@@ -96,7 +96,7 @@ export const useGeneratorStore = defineStore('gen', {
     misleading() {
       let offset = 0;
       this.uInt8Array = new Uint8Array(
-        this.misleadingCount * this.divisionsCount * 128
+        this.misleadingCount * this.points.length * 128
       );
 
       for (const point of this.points) {

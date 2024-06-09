@@ -24,6 +24,7 @@ export class Signal {
   rls = {
     label: 'AN/SPN-46',
     range: [3590, 3700],
+    impulse: 1,
   };
 
   array = new Uint8Array(128);
